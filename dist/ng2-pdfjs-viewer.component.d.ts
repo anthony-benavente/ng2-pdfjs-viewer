@@ -8,6 +8,7 @@ export declare class PdfJsViewerComponent {
     openFile: boolean;
     download: boolean;
     viewBookmark: boolean;
+    defaultZoom: number;
     viewerTab: any;
     private innerSrc;
     pdfSrc: string | Blob | Uint8Array;

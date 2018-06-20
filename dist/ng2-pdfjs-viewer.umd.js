@@ -15,6 +15,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.openFile = true;
         this.download = true;
         this.viewBookmark = true;
+        this.defaultZoom = -1;
     }
     Object.defineProperty(PdfJsViewerComponent.prototype, "pdfSrc", {
         get: /**
@@ -69,10 +70,6 @@ var PdfJsViewerComponent = /** @class */ (function () {
         // if (this.viewerTab) {
         //   console.log(`Status of window - ${this.viewerTab.closed}`);
         // }
-        // console.log(`Tab is - ${this.viewerTab}`);
-        // if (this.viewerTab) {
-        //   console.log(`Status of window - ${this.viewerTab.closed}`);
-        // }
         if (this.externalWindow && (typeof this.viewerTab === 'undefined' || this.viewerTab.closed)) {
             this.viewerTab = window.open('', '_blank');
             if (this.viewerTab == null) {
@@ -84,9 +81,6 @@ var PdfJsViewerComponent = /** @class */ (function () {
             }
         }
         var /** @type {?} */ fileUrl;
-        //if (typeof this.src === "string") {
-        //  fileUrl = this.src;
-        //}
         //if (typeof this.src === "string") {
         //  fileUrl = this.src;
         //}
@@ -123,6 +117,10 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (typeof this.viewBookmark !== 'undefined') {
             viewerUrl += "&viewBookmark=" + this.viewBookmark;
         }
+        // Only append the hashtag option if the defaultZoom was set > 0
+        if (this.defaultZoom > 0) {
+            viewerUrl += "#zoom=" + this.defaultZoom;
+        }
         if (this.externalWindow) {
             this.viewerTab.location.href = viewerUrl;
         }
@@ -137,7 +135,6 @@ var PdfJsViewerComponent = /** @class */ (function () {
                 },] },
     ];
     /** @nocollapse */
-    PdfJsViewerComponent.ctorParameters = function () { return []; };
     PdfJsViewerComponent.propDecorators = {
         "iframe": [{ type: core.ViewChild, args: ['iframe',] },],
         "pdfJsFolder": [{ type: core.Input },],
@@ -147,6 +144,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         "openFile": [{ type: core.Input },],
         "download": [{ type: core.Input },],
         "viewBookmark": [{ type: core.Input },],
+        "defaultZoom": [{ type: core.Input },],
         "pdfSrc": [{ type: core.Input },],
     };
     return PdfJsViewerComponent;
@@ -183,8 +181,6 @@ var PdfJsViewerModule = /** @class */ (function () {
                     ]
                 },] },
     ];
-    /** @nocollapse */
-    PdfJsViewerModule.ctorParameters = function () { return []; };
     return PdfJsViewerModule;
 }());
 

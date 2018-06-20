@@ -29,6 +29,7 @@ export class PdfJsViewerComponent {
   @Input() public openFile: boolean = true;
   @Input() public download: boolean = true;
   @Input() public viewBookmark: boolean = true;
+  @Input() public defaultZoom: number = -1;
 
   public viewerTab: any;
   private innerSrc: string | Blob | Uint8Array;
@@ -133,6 +134,11 @@ export class PdfJsViewerComponent {
     }
     if (typeof this.viewBookmark !== 'undefined') {
       viewerUrl += `&viewBookmark=${this.viewBookmark}`;
+    }
+
+    // Only append the hashtag option if the defaultZoom was set > 0
+    if (this.defaultZoom > 0) {
+      viewerUrl += `#zoom=` + this.defaultZoom;
     }
 
     if (this.externalWindow) {
