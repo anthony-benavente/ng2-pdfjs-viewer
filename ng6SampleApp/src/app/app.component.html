@@ -37,6 +37,7 @@ button:focus {
 <button (click)="changePdf()" style="float: right; background-color: green">Click to change PDF url</button>
 
 <br />
+<ng2-pdfjs-viewer #zoomedPdfViewer [defaultZoom]="150" pdfSrc="pdf-sample.pdf" style="height:300px"></ng2-pdfjs-viewer>
 <ng2-pdfjs-viewer #externalPdfViewer [externalWindow]="true"></ng2-pdfjs-viewer>
 <ng2-pdfjs-viewer #embeddedPdfViewer pdfSrc="pdf-sample.pdf" style="position:fixed; left:845px; width: 825px; height: 400px"></ng2-pdfjs-viewer>
 <ng2-pdfjs-viewer
