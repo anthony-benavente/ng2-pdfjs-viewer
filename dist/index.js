@@ -19,8 +19,18 @@ var PdfJsViewerComponent = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            return this.externalWindow ? this.viewerTab.PDFViewerApplication
-                : this.iframe.nativeElement.contentWindow.PDFViewerApplication;
+            var /** @type {?} */ pdfViewer = null;
+            if (this.externalWindow) {
+                if (this.viewerTab) {
+                    pdfViewer = this.viewerTab.PDFViewerApplication;
+                }
+            }
+            else {
+                if (this.iframe.nativeElement.contentWindow) {
+                    pdfViewer = this.iframe.nativeElement.contentWindow.PDFViewerApplication;
+                }
+            }
+            return pdfViewer;
         },
         enumerable: true,
         configurable: true
