@@ -17,6 +17,17 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.viewBookmark = true;
         this.defaultZoom = -1;
     }
+    Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this.externalWindow ? this.viewerTab.PDFViewerApplication
+                : this.iframe.nativeElement.contentWindow.PDFViewerApplication;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PdfJsViewerComponent.prototype, "pdfSrc", {
         get: /**
          * @return {?}
@@ -30,7 +41,6 @@ var PdfJsViewerComponent = /** @class */ (function () {
          */
         function (innerSrc) {
             this.innerSrc = innerSrc;
-            this.loadPdfDirect(innerSrc);
         },
         enumerable: true,
         configurable: true
@@ -58,21 +68,13 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.loadPdf();
     };
     /**
-     * @param {?} src
      * @return {?}
      */
-    PdfJsViewerComponent.prototype.loadPdfDirect = /**
-     * @param {?} src
+    PdfJsViewerComponent.prototype.refreshForce = /**
      * @return {?}
      */
-    function (src) {
-        if (this.externalWindow) {
-        }
-        else {
-            if (this.iframe.nativeElement.contentWindow.PDFViewerApplication) {
-                this.iframe.nativeElement.contentWindow.PDFViewerApplication.open(src);
-            }
-        }
+    function () {
+        this.loadPdfInitial();
     };
     /**
      * @return {?}
@@ -84,6 +86,25 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (!this.innerSrc) {
             return;
         }
+        if (this.PDFViewerApplication) {
+            // Don't reload the page, just inject the new PDF src
+            this.PDFViewerApplication.open(this.innerSrc);
+        }
+        else {
+            this.loadPdfInitial();
+        }
+    };
+    /**
+     * This function gets called when initializing the viewer. This should only be called once, but
+     * can be called again if necessary.
+     * @return {?}
+     */
+    PdfJsViewerComponent.prototype.loadPdfInitial = /**
+     * This function gets called when initializing the viewer. This should only be called once, but
+     * can be called again if necessary.
+     * @return {?}
+     */
+    function () {
         // console.log(`Tab is - ${this.viewerTab}`);
         // if (this.viewerTab) {
         //   console.log(`Status of window - ${this.viewerTab.closed}`);
@@ -143,8 +164,8 @@ var PdfJsViewerComponent = /** @class */ (function () {
             this.viewerTab.location.href = viewerUrl;
         }
         else {
-            this.iframe.nativeElement.src = viewerUrl;
-            console.log(this.iframe.nativeElement.contentWindow.PDFViewerApplication);
+            // this.iframe.nativeElement.src = viewerUrl;
+            console.log(this.iframe.nativeElement.contentWindow.PDF);
         }
     };
     PdfJsViewerComponent.decorators = [

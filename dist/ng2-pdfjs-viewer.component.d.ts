@@ -11,9 +11,15 @@ export declare class PdfJsViewerComponent {
     defaultZoom: number;
     viewerTab: any;
     private innerSrc;
+    readonly PDFViewerApplication: any;
     pdfSrc: string | Blob | Uint8Array;
     ngOnInit(): void;
     refresh(): void;
-    private loadPdfDirect(src);
+    refreshForce(): void;
     private loadPdf();
+    /**
+     * This function gets called when initializing the viewer. This should only be called once, but
+     * can be called again if necessary.
+     */
+    private loadPdfInitial();
 }

@@ -34,11 +34,14 @@ export class PdfJsViewerComponent {
   public viewerTab: any;
   private innerSrc: string | Blob | Uint8Array;
 
+  public get PDFViewerApplication() {
+    return this.externalWindow ? this.viewerTab.PDFViewerApplication 
+      : this.iframe.nativeElement.contentWindow.PDFViewerApplication;
+  }
+
   @Input()
   public set pdfSrc(innerSrc: string | Blob | Uint8Array) {
     this.innerSrc = innerSrc;
-
-    this.loadPdfDirect(innerSrc);
   }
   
   public get pdfSrc() {
@@ -55,21 +58,27 @@ export class PdfJsViewerComponent {
     this.loadPdf();
   }
 
-  private loadPdfDirect(src: string | Blob | Uint8Array) {
-    if (this.externalWindow) {
-      
-    } else {
-      if (this.iframe.nativeElement.contentWindow.PDFViewerApplication) {
-        this.iframe.nativeElement.contentWindow.PDFViewerApplication.open(src);
-      }
-    }
+  public refreshForce(): void {
+    this.loadPdfInitial();
   }
 
   private loadPdf() {
     if (!this.innerSrc) {
       return;
     }
+    if (this.PDFViewerApplication) {
+      // Don't reload the page, just inject the new PDF src
+      this.PDFViewerApplication.open(this.innerSrc);
+    } else {
+      this.loadPdfInitial();
+    }
+  }
 
+  /**
+   * This function gets called when initializing the viewer. This should only be called once, but
+   * can be called again if necessary.
+   */
+  private loadPdfInitial() {
     // console.log(`Tab is - ${this.viewerTab}`);
     // if (this.viewerTab) {
     //   console.log(`Status of window - ${this.viewerTab.closed}`);
@@ -156,8 +165,8 @@ export class PdfJsViewerComponent {
     if (this.externalWindow) {
       this.viewerTab.location.href = viewerUrl;
     } else {
-      this.iframe.nativeElement.src = viewerUrl;
-      console.log(this.iframe.nativeElement.contentWindow.PDFViewerApplication)
+      // this.iframe.nativeElement.src = viewerUrl;
+      console.log(this.iframe.nativeElement.contentWindow.PDF)
     }
   }
 }
