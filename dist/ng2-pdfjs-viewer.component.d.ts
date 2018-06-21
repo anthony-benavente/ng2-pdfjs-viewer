@@ -14,5 +14,6 @@ export declare class PdfJsViewerComponent {
     pdfSrc: string | Blob | Uint8Array;
     ngOnInit(): void;
     refresh(): void;
+    private loadPdfDirect(src);
     private loadPdf();
 }

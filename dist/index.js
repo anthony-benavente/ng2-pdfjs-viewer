@@ -27,6 +27,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
          */
         function (innerSrc) {
             this.innerSrc = innerSrc;
+            this.loadPdfDirect(innerSrc);
         },
         enumerable: true,
         configurable: true
@@ -52,6 +53,23 @@ var PdfJsViewerComponent = /** @class */ (function () {
     function () {
         // Needs to be invoked for external window or when needs to reload pdf
         this.loadPdf();
+    };
+    /**
+     * @param {?} src
+     * @return {?}
+     */
+    PdfJsViewerComponent.prototype.loadPdfDirect = /**
+     * @param {?} src
+     * @return {?}
+     */
+    function (src) {
+        if (this.externalWindow) {
+        }
+        else {
+            if (this.iframe.nativeElement.contentWindow.PDFViewerApplication) {
+                this.iframe.nativeElement.contentWindow.PDFViewerApplication.open(src);
+            }
+        }
     };
     /**
      * @return {?}
