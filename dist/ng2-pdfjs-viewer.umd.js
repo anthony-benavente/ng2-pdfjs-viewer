@@ -16,6 +16,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.download = true;
         this.viewBookmark = true;
         this.defaultZoom = -1;
+        this.initialLoad = false;
     }
     Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
         get: /**
@@ -96,12 +97,13 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (!this.innerSrc) {
             return;
         }
-        if (this.PDFViewerApplication) {
-            // Don't reload the page, just inject the new PDF src
-            this.PDFViewerApplication.open(this.innerSrc);
+        if (this.initialLoad) {
+            this.initialLoad = true;
+            this.loadPdfInitial();
         }
         else {
-            this.loadPdfInitial();
+            // Don't reload the page, just inject the new PDF src
+            this.PDFViewerApplication.open(this.innerSrc);
         }
     };
     /**

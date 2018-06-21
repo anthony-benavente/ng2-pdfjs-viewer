@@ -9,6 +9,7 @@ export declare class PdfJsViewerComponent {
     download: boolean;
     viewBookmark: boolean;
     defaultZoom: number;
+    private initialLoad;
     viewerTab: any;
     private innerSrc;
     readonly PDFViewerApplication: any;
