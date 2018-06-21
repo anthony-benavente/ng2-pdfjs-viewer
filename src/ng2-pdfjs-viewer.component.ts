@@ -76,13 +76,7 @@ export class PdfJsViewerComponent {
     if (!this.innerSrc) {
       return;
     }
-    if (this.initialLoad) {
-      this.initialLoad = false;
-      this.loadPdfInitial();
-    } else {
-      // Don't reload the page, just inject the new PDF src
-      this.PDFViewerApplication.open(this.innerSrc);
-    }
+    this.loadPdfInitial();
   }
 
   /**
