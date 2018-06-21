@@ -13,7 +13,29 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.download = true;
         this.viewBookmark = true;
         this.defaultZoom = -1;
+        this.initialLoad = true;
     }
+    Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            var /** @type {?} */ pdfViewer = null;
+            if (this.externalWindow) {
+                if (this.viewerTab) {
+                    pdfViewer = this.viewerTab.PDFViewerApplication;
+                }
+            }
+            else {
+                if (this.iframe.nativeElement.contentWindow) {
+                    pdfViewer = this.iframe.nativeElement.contentWindow.PDFViewerApplication;
+                }
+            }
+            return pdfViewer;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PdfJsViewerComponent.prototype, "pdfSrc", {
         get: /**
          * @return {?}
@@ -56,6 +78,15 @@ var PdfJsViewerComponent = /** @class */ (function () {
     /**
      * @return {?}
      */
+    PdfJsViewerComponent.prototype.refreshForce = /**
+     * @return {?}
+     */
+    function () {
+        this.loadPdfInitial();
+    };
+    /**
+     * @return {?}
+     */
     PdfJsViewerComponent.prototype.loadPdf = /**
      * @return {?}
      */
@@ -63,6 +94,26 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (!this.innerSrc) {
             return;
         }
+        if (this.initialLoad) {
+            this.initialLoad = false;
+            this.loadPdfInitial();
+        }
+        else {
+            // Don't reload the page, just inject the new PDF src
+            this.PDFViewerApplication.open(this.innerSrc);
+        }
+    };
+    /**
+     * This function gets called when initializing the viewer. This should only be called once, but
+     * can be called again if necessary.
+     * @return {?}
+     */
+    PdfJsViewerComponent.prototype.loadPdfInitial = /**
+     * This function gets called when initializing the viewer. This should only be called once, but
+     * can be called again if necessary.
+     * @return {?}
+     */
+    function () {
         // console.log(`Tab is - ${this.viewerTab}`);
         // if (this.viewerTab) {
         //   console.log(`Status of window - ${this.viewerTab.closed}`);
