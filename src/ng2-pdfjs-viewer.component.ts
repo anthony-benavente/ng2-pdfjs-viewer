@@ -176,8 +176,7 @@ export class PdfJsViewerComponent {
     if (this.externalWindow) {
       this.viewerTab.location.href = viewerUrl;
     } else {
-      // this.iframe.nativeElement.src = viewerUrl;
-      console.log(this.iframe.nativeElement.contentWindow.PDF)
+      this.iframe.nativeElement.src = viewerUrl;
     }
   }
 }

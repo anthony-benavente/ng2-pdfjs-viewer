@@ -176,8 +176,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
             this.viewerTab.location.href = viewerUrl;
         }
         else {
-            // this.iframe.nativeElement.src = viewerUrl;
-            console.log(this.iframe.nativeElement.contentWindow.PDF);
+            this.iframe.nativeElement.src = viewerUrl;
         }
     };
     PdfJsViewerComponent.decorators = [
