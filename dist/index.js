@@ -13,7 +13,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.download = true;
         this.viewBookmark = true;
         this.defaultZoom = -1;
-        this.initialLoad = false;
+        this.initialLoad = true;
     }
     Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
         get: /**
@@ -95,7 +95,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
             return;
         }
         if (this.initialLoad) {
-            this.initialLoad = true;
+            this.initialLoad = false;
             this.loadPdfInitial();
         }
         else {

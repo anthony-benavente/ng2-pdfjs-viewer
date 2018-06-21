@@ -31,7 +31,7 @@ export class PdfJsViewerComponent {
   @Input() public viewBookmark: boolean = true;
   @Input() public defaultZoom: number = -1;
 
-  private initialLoad: boolean = false;
+  private initialLoad: boolean = true;
   public viewerTab: any;
   private innerSrc: string | Blob | Uint8Array;
 
@@ -77,7 +77,7 @@ export class PdfJsViewerComponent {
       return;
     }
     if (this.initialLoad) {
-      this.initialLoad = true;
+      this.initialLoad = false;
       this.loadPdfInitial();
     } else {
       // Don't reload the page, just inject the new PDF src
