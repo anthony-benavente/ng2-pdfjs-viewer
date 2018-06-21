@@ -20,6 +20,6 @@ export class AppComponent {
   public changePdf() {
     console.log("Changing pdf viewer url!");
     this.embeddedPdfViewer.pdfSrc = "gre_research_validity_data.pdf";
-    this.embeddedPdfViewer.refresh();
+    // this.embeddedPdfViewer.refresh();
   }
 }

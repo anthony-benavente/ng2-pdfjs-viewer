@@ -37,6 +37,8 @@ export class PdfJsViewerComponent {
   @Input()
   public set pdfSrc(innerSrc: string | Blob | Uint8Array) {
     this.innerSrc = innerSrc;
+
+    this.loadPdfDirect(innerSrc);
   }
   
   public get pdfSrc() {
@@ -51,6 +53,16 @@ export class PdfJsViewerComponent {
 
   public refresh(): void { // Needs to be invoked for external window or when needs to reload pdf
     this.loadPdf();
+  }
+
+  private loadPdfDirect(src: string | Blob | Uint8Array) {
+    if (this.externalWindow) {
+      
+    } else {
+      if (this.iframe.nativeElement.contentWindow.PDFViewerApplication) {
+        this.iframe.nativeElement.contentWindow.PDFViewerApplication.open(src);
+      }
+    }
   }
 
   private loadPdf() {
