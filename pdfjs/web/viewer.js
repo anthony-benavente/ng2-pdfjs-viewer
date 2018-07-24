@@ -4357,6 +4357,12 @@
 
       window.PDFViewerApplication = pdfjsWebApp.PDFViewerApplication;
       window.PDFViewerApplicationOptions = pdfjsWebAppOptions.AppOptions;
+
+      let defaultCursor = getUrlParameterByName('defaultCursor');
+      if (defaultCursor) {
+        window.PDFViewerApplicationOptions.set('cursorToolOnLoad', parseInt(defaultCursor));
+      }
+      
       pdfjsWebApp.PDFViewerApplication.run(config);
     }
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
@@ -4364,7 +4370,6 @@
     } else {
       document.addEventListener('DOMContentLoaded', webViewerLoad, true);
     }
-
     /***/
   }),
   /* 11 */
