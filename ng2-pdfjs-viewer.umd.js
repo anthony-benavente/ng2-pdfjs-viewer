@@ -16,6 +16,14 @@ var PdfJsViewerComponent = /** @class */ (function () {
         this.download = true;
         this.viewBookmark = true;
         this.defaultZoom = -1;
+        /**
+         * Sets the default tool for the preview window
+         *
+         *    0: Select
+         *    1: Hand
+         *    2: Zoom
+         */
+        this.defaultCursorTool = CursorTools.HAND;
         this.initialLoad = true;
     }
     Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
@@ -115,7 +123,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         //   console.log(`Status of window - ${this.viewerTab.closed}`);
         // }
         if (this.externalWindow && (typeof this.viewerTab === 'undefined' || this.viewerTab.closed)) {
-            this.viewerTab = window.open('', '_blank');
+            this.viewerTab = window.open('', '_blank', this.externalWindowOptions || '');
             if (this.viewerTab == null) {
                 console.log("ng2-pdfjs-viewer: For 'externalWindow = true'. i.e opening in new tab, to work, pop-ups should be enabled.");
                 return;
@@ -171,6 +179,8 @@ var PdfJsViewerComponent = /** @class */ (function () {
         else {
             this.iframe.nativeElement.src = viewerUrl;
         }
+        // Set the default tool
+        this.PDFViewerApplication.pdfCursorTools.switchTool(this.defaultCursorTool);
     };
     PdfJsViewerComponent.decorators = [
         { type: core.Component, args: [{
@@ -189,10 +199,21 @@ var PdfJsViewerComponent = /** @class */ (function () {
         "download": [{ type: core.Input },],
         "viewBookmark": [{ type: core.Input },],
         "defaultZoom": [{ type: core.Input },],
+        "defaultCursorTool": [{ type: core.Input },],
+        "externalWindowOptions": [{ type: core.Input },],
         "pdfSrc": [{ type: core.Input },],
     };
     return PdfJsViewerComponent;
 }());
+/** @enum {number} */
+var CursorTools = {
+    SELECT: 0,
+    HAND: 1,
+    ZOOM: 2,
+};
+CursorTools[CursorTools.SELECT] = "SELECT";
+CursorTools[CursorTools.HAND] = "HAND";
+CursorTools[CursorTools.ZOOM] = "ZOOM";
 
 /**
  * @fileoverview added by tsickle
