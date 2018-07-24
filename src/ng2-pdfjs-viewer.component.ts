@@ -176,6 +176,9 @@ export class PdfJsViewerComponent {
     if (typeof this.viewBookmark !== 'undefined') {
       viewerUrl += `&viewBookmark=${this.viewBookmark}`;
     }
+    if (typeof this.defaultCursorTool !== 'undefined') {
+      viewerUrl += `&defaultCursor=${this.defaultCursorTool}`
+    }
 
     // Only append the hashtag option if the defaultZoom was set > 0
     if (this.defaultZoom > 0) {
@@ -186,11 +189,7 @@ export class PdfJsViewerComponent {
       this.viewerTab.location.href = viewerUrl;
     } else {
       this.iframe.nativeElement.src = viewerUrl;
-    }
-    
-    // Set the default tool
-    this.PDFViewerApplication.pdfCursorTools.switchTool(this.defaultCursorTool);
-    
+    }    
   }
 
 }

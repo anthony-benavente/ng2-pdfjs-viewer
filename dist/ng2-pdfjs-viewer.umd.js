@@ -169,6 +169,9 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (typeof this.viewBookmark !== 'undefined') {
             viewerUrl += "&viewBookmark=" + this.viewBookmark;
         }
+        if (typeof this.defaultCursorTool !== 'undefined') {
+            viewerUrl += "&defaultCursor=" + this.defaultCursorTool;
+        }
         // Only append the hashtag option if the defaultZoom was set > 0
         if (this.defaultZoom > 0) {
             viewerUrl += "#zoom=" + this.defaultZoom;
@@ -179,8 +182,6 @@ var PdfJsViewerComponent = /** @class */ (function () {
         else {
             this.iframe.nativeElement.src = viewerUrl;
         }
-        // Set the default tool
-        this.PDFViewerApplication.pdfCursorTools.switchTool(this.defaultCursorTool);
     };
     PdfJsViewerComponent.decorators = [
         { type: core.Component, args: [{
