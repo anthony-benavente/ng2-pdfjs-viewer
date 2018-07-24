@@ -31,6 +31,21 @@ export class PdfJsViewerComponent {
   @Input() public viewBookmark: boolean = true;
   @Input() public defaultZoom: number = -1;
 
+  /**
+   * Sets the default tool for the preview window
+   * 
+   *    0: Select
+   *    1: Hand
+   *    2: Zoom
+   */
+  @Input() public defaultCursorTool: number = CursorTools.HAND;
+
+  /**
+   * Used to determine how the external window looks when opened. Follows
+   * the specs parameter from the browsers Window open() function.
+   */
+  @Input() public externalWindowOptions: string;
+
   private initialLoad: boolean = true;
   public viewerTab: any;
   private innerSrc: string | Blob | Uint8Array;
@@ -90,7 +105,7 @@ export class PdfJsViewerComponent {
     // }
 
     if (this.externalWindow && (typeof this.viewerTab === 'undefined' || this.viewerTab.closed)) {
-      this.viewerTab = window.open('', '_blank');
+      this.viewerTab = window.open('', '_blank', this.externalWindowOptions || '');
       if (this.viewerTab == null) {
         console.log("ng2-pdfjs-viewer: For 'externalWindow = true'. i.e opening in new tab, to work, pop-ups should be enabled.");
         return;
@@ -172,5 +187,16 @@ export class PdfJsViewerComponent {
     } else {
       this.iframe.nativeElement.src = viewerUrl;
     }
+    
+    // Set the default tool
+    this.PDFViewerApplication.pdfCursorTools.switchTool(this.defaultCursorTool);
+    
   }
+
+}
+
+enum CursorTools {
+  SELECT = 0,
+  HAND = 1,
+  ZOOM = 2
 }

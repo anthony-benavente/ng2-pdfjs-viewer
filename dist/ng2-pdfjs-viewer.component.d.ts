@@ -9,6 +9,19 @@ export declare class PdfJsViewerComponent {
     download: boolean;
     viewBookmark: boolean;
     defaultZoom: number;
+    /**
+     * Sets the default tool for the preview window
+     *
+     *    0: Select
+     *    1: Hand
+     *    2: Zoom
+     */
+    defaultCursorTool: number;
+    /**
+     * Used to determine how the external window looks when opened. Follows
+     * the specs parameter from the browsers Window open() function.
+     */
+    externalWindowOptions: string;
     private initialLoad;
     viewerTab: any;
     private innerSrc;
