@@ -115,11 +115,11 @@ var PdfJsViewerComponent = /** @class */ (function () {
                 //  fileUrl = this.src;
                 //}
                 if (this.innerSrc instanceof Blob) {
-                    fileUrl = encodeURIComponent(URL.createObjectURL(this.innerSrc));
+                    fileUrl = URL.createObjectURL(this.innerSrc);
                 }
                 else if (this.innerSrc instanceof Uint8Array) {
                     var /** @type {?} */ blob = new Blob([this.innerSrc], { type: "application/pdf" });
-                    fileUrl = encodeURIComponent(URL.createObjectURL(blob));
+                    fileUrl = URL.createObjectURL(blob);
                 }
                 else {
                     fileUrl = this.innerSrc;
