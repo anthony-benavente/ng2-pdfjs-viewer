@@ -97,7 +97,19 @@ export class PdfJsViewerComponent {
       return;
     } else {
       if (this.PDFViewerApplication) {
-        this.PDFViewerApplication.open(this.innerSrc);
+        let fileUrl;
+        //if (typeof this.src === "string") {
+        //  fileUrl = this.src;
+        //}
+        if (this.innerSrc instanceof Blob) {
+          fileUrl = encodeURIComponent(URL.createObjectURL(this.innerSrc));
+        } else if (this.innerSrc instanceof Uint8Array) {
+          let blob = new Blob([this.innerSrc], { type: "application/pdf" });
+          fileUrl = encodeURIComponent(URL.createObjectURL(blob));
+        } else {
+          fileUrl = this.innerSrc;
+        }
+        this.PDFViewerApplication.open(fileUrl);
       }
     }
     // this.loadPdfInitial();

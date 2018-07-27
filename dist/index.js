@@ -110,7 +110,21 @@ var PdfJsViewerComponent = /** @class */ (function () {
         }
         else {
             if (this.PDFViewerApplication) {
-                this.PDFViewerApplication.open(this.innerSrc);
+                var /** @type {?} */ fileUrl = void 0;
+                //if (typeof this.src === "string") {
+                //  fileUrl = this.src;
+                //}
+                if (this.innerSrc instanceof Blob) {
+                    fileUrl = encodeURIComponent(URL.createObjectURL(this.innerSrc));
+                }
+                else if (this.innerSrc instanceof Uint8Array) {
+                    var /** @type {?} */ blob = new Blob([this.innerSrc], { type: "application/pdf" });
+                    fileUrl = encodeURIComponent(URL.createObjectURL(blob));
+                }
+                else {
+                    fileUrl = this.innerSrc;
+                }
+                this.PDFViewerApplication.open(fileUrl);
             }
         }
         // this.loadPdfInitial();
