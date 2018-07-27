@@ -22,7 +22,7 @@ export declare class PdfJsViewerComponent {
      * the specs parameter from the browsers Window open() function.
      */
     externalWindowOptions: string;
-    private initialLoad;
+    private loaded;
     viewerTab: any;
     private innerSrc;
     readonly PDFViewerApplication: any;
