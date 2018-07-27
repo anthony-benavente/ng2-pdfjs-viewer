@@ -26,6 +26,7 @@ export declare class PdfJsViewerComponent {
     viewerTab: any;
     private innerSrc;
     readonly PDFViewerApplication: any;
+    readonly PDFViewerApplicationOptions: any;
     pdfSrc: string | Blob | Uint8Array;
     ngOnInit(): void;
     refresh(): void;

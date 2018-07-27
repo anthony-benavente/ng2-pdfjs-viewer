@@ -44,6 +44,27 @@ var PdfJsViewerComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplicationOptions", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            var /** @type {?} */ pdfViewerOptions = null;
+            if (this.externalWindow) {
+                if (this.viewerTab) {
+                    pdfViewerOptions = this.viewerTab.PDFViewerApplicationOptions;
+                }
+            }
+            else {
+                if (this.iframe.nativeElement.contentWindow) {
+                    pdfViewerOptions = this.iframe.nativeElement.contentWindow.PDFViewerApplicationOptions;
+                }
+            }
+            return pdfViewerOptions;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PdfJsViewerComponent.prototype, "pdfSrc", {
         get: /**
          * @return {?}
