@@ -46,7 +46,7 @@ export class PdfJsViewerComponent {
    */
   @Input() public externalWindowOptions: string;
 
-  private initialLoad: boolean = true;
+  private loaded: boolean = false;
   public viewerTab: any;
   private innerSrc: string | Blob | Uint8Array;
 
@@ -80,18 +80,27 @@ export class PdfJsViewerComponent {
   }
 
   public refresh(): void { // Needs to be invoked for external window or when needs to reload pdf
-    this.loadPdf();
+    if (this.loaded) {
+      this.loadPdf();
+    } else {
+      this.loadPdfInitial();
+    }
   }
 
   public refreshForce(): void {
-    this.loadPdfInitial();
+    this.loaded = false;
+    this.refresh();
   }
 
   private loadPdf() {
     if (!this.innerSrc) {
       return;
+    } else {
+      if (this.PDFViewerApplication) {
+        this.PDFViewerApplication.open(this.innerSrc);
+      }
     }
-    this.loadPdfInitial();
+    // this.loadPdfInitial();
   }
 
   /**
@@ -103,7 +112,7 @@ export class PdfJsViewerComponent {
     // if (this.viewerTab) {
     //   console.log(`Status of window - ${this.viewerTab.closed}`);
     // }
-
+    this.loaded = true;
     if (this.externalWindow && (typeof this.viewerTab === 'undefined' || this.viewerTab.closed)) {
       this.viewerTab = window.open('', '_blank', this.externalWindowOptions || '');
       if (this.viewerTab == null) {
