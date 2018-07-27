@@ -63,6 +63,20 @@ export class PdfJsViewerComponent {
     }
     return pdfViewer;
   }
+  
+  public get PDFViewerApplicationOptions() {
+    let pdfViewerOptions = null;
+    if (this.externalWindow) {
+      if (this.viewerTab) {
+        pdfViewerOptions = this.viewerTab.PDFViewerApplicationOptions;
+      }
+    } else {
+      if (this.iframe.nativeElement.contentWindow) {
+        pdfViewerOptions = this.iframe.nativeElement.contentWindow.PDFViewerApplicationOptions;
+      }
+    }
+    return pdfViewerOptions;
+  }
 
   @Input()
   public set pdfSrc(innerSrc: string | Blob | Uint8Array) {
