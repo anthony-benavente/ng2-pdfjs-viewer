@@ -94,6 +94,10 @@ export class PdfJsViewerComponent {
   }
 
   public refresh(): void { // Needs to be invoked for external window or when needs to reload pdf
+    if (this.externalWindow && (this.viewerTab && this.viewerTab.closed)) {
+      this.loaded = false;
+    }
+
     if (this.loaded) {
       this.loadPdf();
     } else {
