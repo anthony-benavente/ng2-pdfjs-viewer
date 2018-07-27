@@ -21,7 +21,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
          *    2: Zoom
          */
         this.defaultCursorTool = CursorTools.HAND;
-        this.initialLoad = true;
+        this.loaded = false;
     }
     Object.defineProperty(PdfJsViewerComponent.prototype, "PDFViewerApplication", {
         get: /**
@@ -81,7 +81,12 @@ var PdfJsViewerComponent = /** @class */ (function () {
      */
     function () {
         // Needs to be invoked for external window or when needs to reload pdf
-        this.loadPdf();
+        if (this.loaded) {
+            this.loadPdf();
+        }
+        else {
+            this.loadPdfInitial();
+        }
     };
     /**
      * @return {?}
@@ -90,7 +95,8 @@ var PdfJsViewerComponent = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.loadPdfInitial();
+        this.loaded = false;
+        this.refresh();
     };
     /**
      * @return {?}
@@ -102,7 +108,12 @@ var PdfJsViewerComponent = /** @class */ (function () {
         if (!this.innerSrc) {
             return;
         }
-        this.loadPdfInitial();
+        else {
+            if (this.PDFViewerApplication) {
+                this.PDFViewerApplication.open(this.innerSrc);
+            }
+        }
+        // this.loadPdfInitial();
     };
     /**
      * This function gets called when initializing the viewer. This should only be called once, but
@@ -119,6 +130,7 @@ var PdfJsViewerComponent = /** @class */ (function () {
         // if (this.viewerTab) {
         //   console.log(`Status of window - ${this.viewerTab.closed}`);
         // }
+        this.loaded = true;
         if (this.externalWindow && (typeof this.viewerTab === 'undefined' || this.viewerTab.closed)) {
             this.viewerTab = window.open('', '_blank', this.externalWindowOptions || '');
             if (this.viewerTab == null) {
