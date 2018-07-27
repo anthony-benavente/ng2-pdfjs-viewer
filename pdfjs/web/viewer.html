@@ -30,11 +30,39 @@ See https://github.com/adobe-type-tools/cmap-resources
 
 
     <link rel="stylesheet" href="viewer.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.0/jquery.contextMenu.css" rel="stylesheet">
 
 
 <!-- This snippet is used in production (included from viewer.html) -->
 <link rel="resource" type="application/l10n" href="locale/locale.properties">
+<script src="https://use.fontawesome.com/d766e342c0.js"></script>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
 <script src="../build/pdf.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.0/jquery.contextMenu.js"></script>
+<script>
+  $(function() {
+    $.contextMenu({
+      selector: 'body', 
+      callback: function(key, options) {
+          switch (key) {
+            case 'rotatel': 
+              PDFViewerApplication.rotatePages(-90);
+              break;
+            case 'rotater':
+              PDFViewerApplication.rotatePages(90);
+              break;
+          }
+      },
+      items: {
+        "rotater": {name: "Rotate", icon: "fa-repeat"},
+        "rotatel": {name: "Rotate CC", icon: "fa-undo"}
+      }
+  });  
+  })
+</script>
 
 
     <script src="viewer.js"></script>
